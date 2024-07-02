@@ -21,7 +21,7 @@ jobs:
         channel: stable
         flutter-version: 3.19.0
       # Install your project's dependencies
-    - run: flutter pub getget
+    - run: flutter pub get
 
       # Build and sign the ipa using a single flutter command
     - name: Building IPA
