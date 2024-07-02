@@ -17,7 +17,7 @@ jobs:
       uses: actions/checkout@v4
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
-      with
+      with:
         flutter-version: 2.9.0
       # Install your project's dependencies
     - run: flutter pub get
