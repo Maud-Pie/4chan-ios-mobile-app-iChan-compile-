@@ -1,5 +1,4 @@
 name: "[DEV] Build and Publish iOS"
-on: workflow_dispatch
     
 on:
   push:
@@ -14,28 +13,24 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      # Install flutter
-      - name: Flutter get
-        uses: subosito/flutter-action@v2
-    with:
-      channel: stable
-      flutter-version: 3.19.0
+    - name: Clone repository
+      uses: actions/checkout@v4
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        flutter-version: 3.19.0
       # Install your project's dependencies
-      - run: flutter pub get
+    - run: flutter pub getget
 
       # Build and sign the ipa using a single flutter command
-      - name: Building IPA
-        run: flutter build ipa --release
+    - name: Building IPA
+      run: flutter build ipa --release
           
       # Collect the file and upload as artifact         
-      - name: collect ipa artifacts
-        uses: actions/upload-artifact@v2
-        with:
+    - name: collect ipa artifacts
+      uses: actions/upload-artifact@v2
+      with:
          name: release-ipa
          # Path to the release files
          path: build/ios/ipa/*.ipa
@@ -54,4 +49,3 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: release-ipa
-
