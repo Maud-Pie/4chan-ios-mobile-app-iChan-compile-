@@ -1,21 +1,30 @@
 name: "[DEV] Build and Publish iOS"
 on: workflow_dispatch
     
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
 jobs:
-  # Build job
   build:
+    name: Build Bootstrap
     runs-on: macos-latest
+
     steps:
-      # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
 
       # Install flutter
       - name: Flutter get
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '2.10.1'
-
+        uses: subosito/flutter-action@v2
+    with:
+      channel: stable
+      flutter-version: 3.19.0
       # Install your project's dependencies
       - run: flutter pub get
 
@@ -45,3 +54,4 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: release-ipa
+
